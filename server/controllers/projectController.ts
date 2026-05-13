@@ -1,6 +1,7 @@
 import {Request, Response} from 'express'
 import prisma from '../lib/prisma.js';
 import openai from '../configs/openai.js';
+import { PROMPT_MODEL, GENERATION_MODEL } from '../configs/openai.js';
 
 // Controller Function to Make Revision
 export const makeRevision = async (req: Request, res: Response) => {
@@ -51,7 +52,7 @@ export const makeRevision = async (req: Request, res: Response) => {
 
         // Enhance user prompt
         const promptEnhanceResponse = await openai.chat.completions.create({
-            model: 'openai/gpt-4o-mini',
+            model: PROMPT_MODEL,
             messages: [
                 {
                     role: 'system',
@@ -92,7 +93,7 @@ export const makeRevision = async (req: Request, res: Response) => {
 
         // Generate website code
         const codeGenerationResponse = await openai.chat.completions.create({
-            model: 'openai/gpt-4o-mini',
+            model: GENERATION_MODEL,
             messages: [
                 {
                     role: 'system',
